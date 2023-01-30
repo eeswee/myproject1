@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h1> {{event.name}} </h1>
+    {% if registered %}
+        <P>You have already registered for this event</P>
+    {% else %}
+        <a class='btn btn=primary' href="{% url 'event_confirmation' event.id%}"> Register For Event </a>
+    {% endif %}
+
+    {% if submitted %}
+        <P>You have already submitted for your project</P>
+    {% else %}
+        <a class='btn btn=primary' href="{% url 'project_submission' event.id %}">Submit Project</a>
+    {% endif %}
+
+    
+
+
+    <p> {{event.description|linebreaks|urlize}} </p>
+
+    <div class="users--lists section">
+        {% for user in event.participants.all %}
+            <a href="{% url 'profile' user.id%}">
+                <div class="wrapper--user">
+                    <div class="avatar__border">
+                        <img class="user--avatar--sm" src="{{user.avatar.url}}"/>
+                    </div>
+        
+                    <p>{{user.name}}</p>
+            
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock content %}
